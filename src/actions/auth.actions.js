@@ -1,13 +1,21 @@
-import { LOGIN_REQUEST, USERNAME_CHANGED, PASSWORD_CHANGED } from '../constants/index';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, USERNAME_CHANGED, PASSWORD_CHANGED } from '../constants/index';
 import { authService } from '../services/auth.service';
 
 export const login = (dispatch, username, password) => {
+    dispatch({
+        type: LOGIN_REQUEST,
+        user: {username, password}
+    })
     authService.login(username, password)
-        .then(dispatch({
-            type: LOGIN_REQUEST,
-            username,
-            password
-        }))
+        .then(resp => {
+            if (resp.ok) {
+                dispatch({ type: LOGIN_SUCCESS });
+            } else {
+                resp.json().then(err => {
+                    dispatch({ type: LOGIN_FAILURE, errorMsg: err.error });
+                });
+            }
+        });
 };
 
 export const handleUsernameUpdated = (dispatch, username) => (

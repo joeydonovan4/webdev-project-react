@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, FormGroup, Col, ControlLabel, FormControl, Button } from 'react-bootstrap';
+import { Form, FormGroup, Col, ControlLabel, FormControl, Button, HelpBlock } from 'react-bootstrap';
 import { login, handleUsernameUpdated, handlePasswordUpdated } from '../../actions/auth.actions';
 
 class Login extends Component {
@@ -15,22 +15,26 @@ class Login extends Component {
             <div className="col-md-6 col-md-offset-3">
                 <h2>Login</h2>
                 <Form>
-                    <FormGroup controlId="username">
+                    <FormGroup controlId="username" validationState={this.usernameValidation()}>
                         <Col componentClass={ControlLabel} sm={2}>
                             Username
                         </Col>
                         <Col sm={10}>
                             <FormControl type="text" placeholder="Username" value={this.props.user.username}
                                 onChange={(e) => this.props.handleUsernameUpdated(e.target.value)}/>
+                            <FormControl.Feedback />
+                            {this.usernameValidation() && <HelpBlock>{this.props.errorMsg}</HelpBlock>}
                         </Col>
                     </FormGroup>
-                    <FormGroup controlId="password">
+                    <FormGroup controlId="password" validationState={this.passwordValidation()}>
                         <Col componentClass={ControlLabel} sm={2}>
                             Password
                         </Col>
                         <Col sm={10}>
                             <FormControl type="password" placeholder="Password" value={this.props.user.password}
                                 onChange={(e) => this.props.handlePasswordUpdated(e.target.value)}/>
+                            <FormControl.Feedback />
+                            {this.passwordValidation() && <HelpBlock>{this.props.errorMsg}</HelpBlock>}
                         </Col>
                     </FormGroup>
                     <FormGroup>
@@ -52,11 +56,26 @@ class Login extends Component {
     disableSubmit() {
         return this.props.user.username === '' || this.props.user.password === '';
     }
+
+    usernameValidation() {
+        if (this.props.errorMsg && this.props.errorMsg.toLowerCase().includes('username')) {
+            return 'error';
+        }
+        return null;
+    }
+
+    passwordValidation() {
+        if (this.props.errorMsg && this.props.errorMsg.toLowerCase().includes('password')) {
+            return 'error';
+        }
+        return null;
+    }
 }
 
 const stateToPropertiesMapper = (state) => ({
     loggingIn: state.authReducer.loggingIn,
-    user: state.authReducer.user
+    user: state.authReducer.user,
+    errorMsg: state.authReducer.errorMsg
 });
 
 const dispatcherToPropsMapper = dispatch => ({

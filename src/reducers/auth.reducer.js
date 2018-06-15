@@ -1,14 +1,20 @@
 import * as constants from '../constants/index';
 
-export const authReducer = (state = {loggingIn: false, user: {username: '', password: ''}}, action) => {
+export const authReducer = (state = {loggingIn: false, user: {username: '', password: ''}, errorMsg: ''}, action) => {
     switch (action.type) {
         case constants.LOGIN_REQUEST:
             return {
+                ...state,
+                errorMsg: '',
                 loggingIn: true,
-                user: action.user
+                user: action.user,
             }
         case constants.USERNAME_CHANGED:
+            if (state.errorMsg.toLowerCase().includes('username')) {
+                state.errorMsg = '';
+            }
             return {
+                ...state,
                 loggingIn: false,
                 user: {
                     username: action.username,
@@ -16,12 +22,22 @@ export const authReducer = (state = {loggingIn: false, user: {username: '', pass
                 }
             }
         case constants.PASSWORD_CHANGED:
+            if (state.errorMsg.toLowerCase().includes('password')) {
+                state.errorMsg = '';
+            }
             return {
+                ...state,
                 loggingIn: false,
                 user: {
                     username: state.user.username,
                     password: action.password
                 }
+            }
+        case constants.LOGIN_FAILURE:
+            return {
+                loggingIn: false,
+                user: state.user,
+                errorMsg: action.errorMsg
             }
         default:
             return state;
