@@ -10,6 +10,11 @@ class Login extends Component {
         this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
         this.disableSubmit = this.disableSubmit.bind(this);
     }
+    componentDidUpdate() {
+        if (this.props.loggedIn) {
+            this.props.history.push('/');
+        }
+    }
     render() {
         return (
             <div className="col-md-6 col-md-offset-3">
@@ -75,7 +80,8 @@ class Login extends Component {
 const stateToPropertiesMapper = (state) => ({
     loggingIn: state.authReducer.loggingIn,
     user: state.authReducer.user,
-    errorMsg: state.authReducer.errorMsg
+    errorMsg: state.authReducer.errorMsg,
+    loggedIn: state.authReducer.loggedIn
 });
 
 const dispatcherToPropsMapper = dispatch => ({

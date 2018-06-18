@@ -1,6 +1,6 @@
 import * as constants from '../constants/index';
 
-export const authReducer = (state = {loggingIn: false, user: {username: '', password: ''}, errorMsg: ''}, action) => {
+export const authReducer = (state = {loggingIn: false, user: {username: '', password: ''}, errorMsg: '', loggedIn: false}, action) => {
     switch (action.type) {
         case constants.LOGIN_REQUEST:
             return {
@@ -38,6 +38,13 @@ export const authReducer = (state = {loggingIn: false, user: {username: '', pass
                 loggingIn: false,
                 user: state.user,
                 errorMsg: action.errorMsg
+            }
+        case constants.LOGIN_SUCCESS:
+            return {
+                loggingIn: false,
+                user: state.user,
+                errorMsg: '',
+                loggedIn: true
             }
         default:
             return state;
