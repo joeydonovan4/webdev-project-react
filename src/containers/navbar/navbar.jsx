@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Navbar, InputGroup, FormControl, Button, DropdownButton, MenuItem } from "react-bootstrap";
 import { connect } from 'react-redux';
 import { findRecordsForType, queryUpdated, recordTypeUpdated } from '../../actions/search.actions';
+import { LinkContainer } from 'react-router-bootstrap';
 
 class Nav extends Component {
     constructor(props) {
@@ -49,8 +50,10 @@ class Nav extends Component {
                             </DropdownButton>
                             <FormControl type="text" placeholder="Search" value={this.props.query}
                                 onChange={this.handleQueryUpdated}/>
-                            <InputGroup.Button>
-                                <Button disabled={!this.props.query} onClick={this.handleSearchSubmit}><span className="fa fa-search"></span></Button>
+                            <InputGroup.Button onClick={this.handleSearchSubmit}>
+                                <LinkContainer to={"/search?q=" + this.props.query + "&recordType=" + this.props.recordType}>
+                                    <Button disabled={!this.props.query}><span className="fa fa-search"></span></Button>
+                                </LinkContainer>
                             </InputGroup.Button>
                         </InputGroup>
                     </Navbar.Form>
