@@ -18,7 +18,7 @@ export const findRecordsForType = (dispatch, recordType, query) => {
                 resp.json().then(records => {
                     dispatch({
                         type: SEARCH_SUCCESS,
-                        records
+                        records: records.records
                     })
                 });
             }
