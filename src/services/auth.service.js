@@ -1,4 +1,4 @@
-const HOST = 'http://localhost:4000/api';
+import { HOST } from '../constants/index';
 
 function login(username, password) {
     return fetch(HOST + '/login', {
