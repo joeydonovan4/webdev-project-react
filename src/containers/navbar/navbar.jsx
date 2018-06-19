@@ -39,13 +39,13 @@ class Nav extends Component {
                             <DropdownButton
                                 componentClass={InputGroup.Button}
                                 id="search-type-dropdown"
-                                title={this.props.recordType}
+                                title={this.props.recordType.replace(/^\w/, c => c.toUpperCase())}
                                 onSelect={this.handleRecordTypeUpdated}>
-                                <MenuItem eventKey="Object" active={this.props.recordType === "Object"}>Object</MenuItem>
-                                <MenuItem eventKey="Person" active={this.props.recordType === "Person"}>Person</MenuItem>
-                                <MenuItem eventKey="Publication" active={this.props.recordType === "Publication"}>Publication</MenuItem>
-                                <MenuItem eventKey="Exhibition" active={this.props.recordType === "Exhibition"}>Exhibition</MenuItem>
-                                <MenuItem eventKey="Gallery" active={this.props.recordType === "Gallery"}>Gallery</MenuItem>
+                                <MenuItem eventKey="object" active={this.props.recordType === "object"}>Object</MenuItem>
+                                <MenuItem eventKey="person" active={this.props.recordType === "person"}>Person</MenuItem>
+                                <MenuItem eventKey="publication" active={this.props.recordType === "publication"}>Publication</MenuItem>
+                                <MenuItem eventKey="exhibition" active={this.props.recordType === "exhibition"}>Exhibition</MenuItem>
+                                <MenuItem eventKey="gallery" active={this.props.recordType === "gallery"}>Gallery</MenuItem>
                             </DropdownButton>
                             <FormControl type="text" placeholder="Search" value={this.props.query}
                                 onChange={this.handleQueryUpdated}/>

@@ -2,7 +2,7 @@ import { SEARCHING, SEARCH_FAILURE, SEARCH_SUCCESS, QUERY_UPDATED, RECORD_TYPE_U
 
 export const searchReducer = (state = {
     searching: false,
-    recordType: 'Object',
+    recordType: 'object',
     query: '',
     records: [],
     errorMsg: ''}, action) => {
