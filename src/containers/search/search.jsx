@@ -72,14 +72,15 @@ const PersonRecord = ({person}) => {
 
 class ObjectRecord extends Component {
     getArtist() {
-        let artist = this.props.object.people.filter(p => (
-            p.role === 'Artist'
-        ));
-        if (artist.length > 0) {
-            return artist[0].displayname;
-        } else {
-            return null;
+        if (this.props.object.people) {
+            let artist = this.props.object.people.filter(p => (
+                p.role === 'Artist'
+            ));
+            if (artist.length > 0) {
+                return artist[0].displayname;
+            }
         }
+        return null;
     }
 
     render() {
