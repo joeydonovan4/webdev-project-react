@@ -20,7 +20,7 @@ class App extends Component {
 export default App;
 
 const LoginContainer = () => (
-    <div className="container-fluid">
+    <div className="container">
         <Route exact path="/" render={() => <Redirect to="/login" />}/>
         <Route path="/login" component={Login}/>
     </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, FormGroup, Col, ControlLabel, FormControl, Button, HelpBlock } from 'react-bootstrap';
+import { FormGroup, FormControl, Button, HelpBlock } from 'react-bootstrap';
 import { login, handleUsernameUpdated, handlePasswordUpdated } from '../../actions/auth.actions';
 
 class Login extends Component {
@@ -17,38 +17,23 @@ class Login extends Component {
     }
     render() {
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h2>Login</h2>
-                <Form>
-                    <FormGroup controlId="username" validationState={this.usernameValidation()}>
-                        <Col componentClass={ControlLabel} sm={2}>
-                            Username
-                        </Col>
-                        <Col sm={10}>
-                            <FormControl type="text" placeholder="Username" value={this.props.user.username}
-                                onChange={(e) => this.props.handleUsernameUpdated(e.target.value)}/>
-                            <FormControl.Feedback />
+            <div className="login">
+                <form onSubmit={this.handleLoginSubmit} className="loginForm">
+                    <FormGroup controlId="username" bsSize="large" validationState={this.usernameValidation()}>
+                        <FormControl autoFocus type="text" placeholder="Username" value={this.props.user.username}
+                            onChange={(e) => this.props.handleUsernameUpdated(e.target.value)}/>
+                        <FormControl.Feedback />
                             {this.usernameValidation() && <HelpBlock>{this.props.errorMsg}</HelpBlock>}
-                        </Col>
                     </FormGroup>
-                    <FormGroup controlId="password" validationState={this.passwordValidation()}>
-                        <Col componentClass={ControlLabel} sm={2}>
-                            Password
-                        </Col>
-                        <Col sm={10}>
-                            <FormControl type="password" placeholder="Password" value={this.props.user.password}
-                                onChange={(e) => this.props.handlePasswordUpdated(e.target.value)}/>
-                            <FormControl.Feedback />
+                    <FormGroup controlId="password" bsSize="large" validationState={this.passwordValidation()}>
+                        <FormControl type="password" placeholder="Password" value={this.props.user.password}
+                            onChange={(e) => this.props.handlePasswordUpdated(e.target.value)}/>
+                        <FormControl.Feedback />
                             {this.passwordValidation() && <HelpBlock>{this.props.errorMsg}</HelpBlock>}
-                        </Col>
                     </FormGroup>
-                    <FormGroup>
-                        <Col smOffset={2} sm={10}>
-                            <Button bsStyle="primary" type="submit" disabled={this.disableSubmit()} onClick={this.handleLoginSubmit}>Sign in</Button>
-                            <Button bsStyle="link" type="button" >Register</Button>
-                        </Col>
-                    </FormGroup>
-                </Form>
+                    <Button block bsSize="large" disabled={this.disableSubmit()} type="submit">Login</Button>
+                    <Button block bsSize="large" type="button">Register</Button>
+                </form>
             </div>
         )
     }
