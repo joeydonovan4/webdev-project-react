@@ -1,20 +1,35 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import { Login } from '../containers/login/index';
 import { Home } from '../containers/home/index';
 import { Search } from '../containers/search/index';
+import { Navbar } from '../containers/navbar/index';
 
 class App extends Component {
     render() {
         return (
             <Router>
-                <div className="container-fluid">
-                    <Route exact path="/login" component={Login}/>
-                    <Route path="/" component={Home}/>
-                    <Route path="/search" component={Search}/>
-                </div>
+                <Switch>
+                    <Route exact path="/(login)" component={LoginContainer}/>
+                    <Route component={DefaultContainer}/>
+                </Switch>
             </Router>
         );
     }
 }
 export default App;
+
+const LoginContainer = () => (
+    <div className="container-fluid">
+        <Route exact path="/" render={() => <Redirect to="/login" />}/>
+        <Route path="/login" component={Login}/>
+    </div>
+)
+
+const DefaultContainer = () => (
+    <div className="container-fluid">
+        <Navbar />
+        <Route path="/" component={Home}/>
+        <Route path="/search" component={Search}/>
+    </div>
+)

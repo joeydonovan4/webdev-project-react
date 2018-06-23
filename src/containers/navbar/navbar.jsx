@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, InputGroup, FormControl, Button, DropdownButton, MenuItem } from "react-bootstrap";
+import { Navbar, Nav as Nav2, NavItem, InputGroup, FormControl, Button, DropdownButton, MenuItem } from "react-bootstrap";
 import { connect } from 'react-redux';
 import { findRecordsForType, queryUpdated, recordTypeUpdated } from '../../actions/search.actions';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -60,6 +60,10 @@ class Nav extends Component {
                             </InputGroup.Button>
                         </InputGroup>
                     </Navbar.Form>
+                    <Nav2 pullRight>
+                        <NavItem eventKey="">Login</NavItem>
+                        <NavItem eventKey="">Logout</NavItem>
+                    </Nav2>
                 </Navbar.Collapse>
             </Navbar>
         )
