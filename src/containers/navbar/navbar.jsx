@@ -3,6 +3,7 @@ import { Navbar, InputGroup, FormControl, Button, DropdownButton, MenuItem } fro
 import { connect } from 'react-redux';
 import { findRecordsForType, queryUpdated, recordTypeUpdated } from '../../actions/search.actions';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
 
 class Nav extends Component {
     constructor(props) {
@@ -31,7 +32,9 @@ class Nav extends Component {
         return (
             <Navbar fixedTop fluid>
                 <Navbar.Header>
-                    <Navbar.Brand>SmartArt</Navbar.Brand>
+                    <Navbar.Brand>
+                        <Link to="/home">SmartArt</Link>
+                    </Navbar.Brand>
                     <Navbar.Toggle/>
                 </Navbar.Header>
                 <Navbar.Collapse>
