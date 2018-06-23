@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { findRecordsForType, queryUpdated, recordTypeUpdated } from '../../actions/search.actions';
 import { setLoggedIn } from '../../actions/auth.actions';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { authService } from '../../services/auth.service';
 
 class Nav extends Component {
@@ -13,6 +13,7 @@ class Nav extends Component {
         this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
         this.handleQueryUpdated = this.handleQueryUpdated.bind(this);
         this.handleRecordTypeUpdated = this.handleRecordTypeUpdated.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     componentDidMount() {
@@ -23,13 +24,14 @@ class Nav extends Component {
         authService.getCurrentUser()
             .then(response => {
                 if (response.ok) {
+                    console.log(response);
                     response.json().then(user => {
-                        if (user) {
-                            this.props.setLoggedIn(true);
-                        } else {
-                            this.props.setLoggedIn(false);
-                        }
+                        this.props.setLoggedIn(true);
                     });
+                } else {
+                    if (response.status === 401) {
+                        this.props.setLoggedIn(false);
+                    }
                 }
             });
     }
@@ -49,6 +51,15 @@ class Nav extends Component {
         }
     }
 
+    logout() {
+        authService.logout()
+            .then(response => {
+                if (response.ok) {
+                    this.props.history.push('/login');
+                }
+            })
+    }
+
     render() {
         return (
             <Navbar fixedTop fluid>
@@ -63,11 +74,13 @@ class Nav extends Component {
                         {this.props.loggedIn ?
                             <NavDropdown id="user-dropdown-loggedin" eventKey="user-dropdown-loggedin" title={<span><i className="fa fa-user fa-fw"></i></span>}>
                                 <MenuItem eventKey="profile">Profile</MenuItem>
-                                <MenuItem eventKey="logout">Logout</MenuItem>
+                                <MenuItem eventKey="logout" onClick={this.logout}>Logout</MenuItem>
                             </NavDropdown>
                             :
                             <NavDropdown id="user-dropdown-guest" eventKey="user-dropdown-guest" title={<span><i className="fa fa-user fa-fw"></i></span>}>
-                                <MenuItem eventKey="login">Login</MenuItem>
+                                <LinkContainer to="/login">
+                                    <MenuItem eventKey="login">Login</MenuItem>
+                                </LinkContainer>
                                 <MenuItem eventKey="register">Register</MenuItem>
                             </NavDropdown>
                         }
@@ -116,6 +129,6 @@ const dispatcherToPropsMapper = dispatch => ({
 const connectedNavbar = connect(
     stateToPropertiesMapper,
     dispatcherToPropsMapper
-)(Nav);
+)(withRouter(Nav));
 
 export { connectedNavbar as Navbar };
