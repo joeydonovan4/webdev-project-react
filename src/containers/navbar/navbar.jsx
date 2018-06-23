@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Navbar, Nav as Nav2, NavItem, InputGroup, FormControl, Button, DropdownButton, MenuItem } from "react-bootstrap";
+import { Navbar, Nav as Nav2, NavDropdown, InputGroup, FormControl, Button, DropdownButton, MenuItem } from "react-bootstrap";
 import { connect } from 'react-redux';
 import { findRecordsForType, queryUpdated, recordTypeUpdated } from '../../actions/search.actions';
+import { setLoggedIn } from '../../actions/auth.actions';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
+import { authService } from '../../services/auth.service';
 
 class Nav extends Component {
     constructor(props) {
@@ -11,6 +13,25 @@ class Nav extends Component {
         this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
         this.handleQueryUpdated = this.handleQueryUpdated.bind(this);
         this.handleRecordTypeUpdated = this.handleRecordTypeUpdated.bind(this);
+    }
+
+    componentDidMount() {
+        this.getCurrentUser();
+    }
+
+    getCurrentUser() {
+        authService.getCurrentUser()
+            .then(response => {
+                if (response.ok) {
+                    response.json().then(user => {
+                        if (user) {
+                            this.props.setLoggedIn(true);
+                        } else {
+                            this.props.setLoggedIn(false);
+                        }
+                    });
+                }
+            });
     }
 
     handleSearchSubmit(e) {
@@ -38,6 +59,19 @@ class Nav extends Component {
                     <Navbar.Toggle/>
                 </Navbar.Header>
                 <Navbar.Collapse>
+                    <Nav2 pullRight>
+                        {this.props.loggedIn ?
+                            <NavDropdown id="user-dropdown-loggedin" eventKey="user-dropdown-loggedin" title={<span><i className="fa fa-user fa-fw"></i></span>}>
+                                <MenuItem eventKey="profile">Profile</MenuItem>
+                                <MenuItem eventKey="logout">Logout</MenuItem>
+                            </NavDropdown>
+                            :
+                            <NavDropdown id="user-dropdown-guest" eventKey="user-dropdown-guest" title={<span><i className="fa fa-user fa-fw"></i></span>}>
+                                <MenuItem eventKey="login">Login</MenuItem>
+                                <MenuItem eventKey="register">Register</MenuItem>
+                            </NavDropdown>
+                        }
+                    </Nav2>
                     <Navbar.Form pullRight>
                         <InputGroup>
                             <DropdownButton
@@ -60,10 +94,6 @@ class Nav extends Component {
                             </InputGroup.Button>
                         </InputGroup>
                     </Navbar.Form>
-                    <Nav2 pullRight>
-                        <NavItem eventKey="">Login</NavItem>
-                        <NavItem eventKey="">Logout</NavItem>
-                    </Nav2>
                 </Navbar.Collapse>
             </Navbar>
         )
@@ -72,13 +102,15 @@ class Nav extends Component {
 
 const stateToPropertiesMapper = (state) => ({
     query: state.searchReducer.query,
-    recordType: state.searchReducer.recordType
+    recordType: state.searchReducer.recordType,
+    loggedIn: state.authReducer.loggedIn
 });
 
 const dispatcherToPropsMapper = dispatch => ({
     findRecordsForType: (recordType, query) => findRecordsForType(dispatch, recordType, query),
     queryUpdated: (newQuery) => queryUpdated(dispatch, newQuery),
-    recordTypeUpdated: (newRecordType) => recordTypeUpdated(dispatch, newRecordType)
+    recordTypeUpdated: (newRecordType) => recordTypeUpdated(dispatch, newRecordType),
+    setLoggedIn: (loggedIn) => setLoggedIn(dispatch, loggedIn)
 });
 
 const connectedNavbar = connect(

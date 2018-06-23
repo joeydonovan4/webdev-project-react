@@ -46,6 +46,11 @@ export const authReducer = (state = {loggingIn: false, user: {username: '', pass
                 errorMsg: '',
                 loggedIn: true
             }
+        case constants.SET_LOGGED_IN:
+            return {
+                ...state,
+                loggedIn: action.loggedIn
+            }
         default:
             return state;
     }
