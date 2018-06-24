@@ -94,6 +94,19 @@ export const findFavorites = (dispatch, recordType, userId) => {
                     }
                 });
             break;
+        case 'gallery':
+            userService.findFavoriteGalleries(userId)
+                .then(response => {
+                    if (response.ok) {
+                        response.json().then(favorites => {
+                            dispatch({
+                                type: SET_FAVORITES,
+                                favorites: favorites.favoriteGalleries
+                            })
+                        });
+                    }
+                });
+            break;
         default:
             return;
     }
