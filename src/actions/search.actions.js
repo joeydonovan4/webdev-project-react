@@ -1,4 +1,4 @@
-import { SEARCHING, SEARCH_FAILURE, SEARCH_SUCCESS, QUERY_UPDATED, RECORD_TYPE_UPDATED, SET_FAVORITES } from '../constants/index';
+import { SEARCHING, SEARCH_FAILURE, SEARCH_SUCCESS, QUERY_UPDATED, RECORD_TYPE_UPDATED, SET_FAVORITES, ADD_FAVORITE } from '../constants/index';
 import { searchService } from '../services/search.service';
 import { userService } from '../services/user.service';
 
@@ -111,3 +111,85 @@ export const findFavorites = (dispatch, recordType, userId) => {
             return;
     }
 };
+
+export const favoriteRecord = (dispatch, userId, recordType, recordId, isFavorited) => {
+    switch (recordType) {
+        case 'object':
+            if (!isFavorited) {
+                userService.addFavoriteObject(userId, recordId)
+                    .then(response => {
+                        if (response.ok) {
+                            response.json().then(() => {
+                                dispatch({
+                                    type: ADD_FAVORITE,
+                                    id: recordId
+                                })
+                            });
+                        }
+                    });
+            }
+            break;
+        case 'person':
+            if (!isFavorited) {
+                userService.addFavoriteArtist(userId, recordId)
+                    .then(response => {
+                        if (response.ok) {
+                            response.json().then(() => {
+                                dispatch({
+                                    type: ADD_FAVORITE,
+                                    id: recordId
+                                })
+                            });
+                        }
+                    });
+            }
+            break;
+        case 'publication':
+            if (!isFavorited) {
+                userService.addFavoritePublication(userId, recordId)
+                    .then(response => {
+                        if (response.ok) {
+                            response.json().then(() => {
+                                dispatch({
+                                    type: ADD_FAVORITE,
+                                    id: recordId
+                                })
+                            });
+                        }
+                    });
+            }
+            break;
+        case 'exhibition':
+            if (!isFavorited) {
+                userService.addFavoriteExhibition(userId, recordId)
+                    .then(response => {
+                        if (response.ok) {
+                            response.json().then(() => {
+                                dispatch({
+                                    type: ADD_FAVORITE,
+                                    id: recordId
+                                })
+                            });
+                        }
+                    });
+            }
+            break;
+        case 'gallery':
+            if (!isFavorited) {
+                userService.addFavoriteGallery(userId, recordId)
+                    .then(response => {
+                        if (response.ok) {
+                            response.json().then(() => {
+                                dispatch({
+                                    type: ADD_FAVORITE,
+                                    id: recordId
+                                })
+                            });
+                        }
+                    });
+            }
+            break;
+        default:
+            return;
+    }
+}
