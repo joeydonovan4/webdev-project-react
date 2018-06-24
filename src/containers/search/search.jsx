@@ -187,7 +187,14 @@ class PublicationRecord extends Component {
         return (
             <Panel>
                 <Panel.Heading>
-                    <a style={{fontSize: 20, fontWeight: 'bold'}} href={this.props.publication.url} target="_blank">{this.props.publication.title}</a>
+                    <p style={{display: 'inline', fontSize: 20, fontWeight: 'bold'}}>{this.props.publication.title}</p>
+                    <span className="star" title="Favorite">
+                        <StarRatingComponent
+                            name={this.props.publication.id + "-stars"}
+                            value={this.props.publication.favorite ? 1 : 0}
+                            starCount={1}
+                            emptyStarColor="rgb(177, 175, 175)"/>
+                    </span>
                 </Panel.Heading>
                 <Panel.Body>
                     <ListGroup>
