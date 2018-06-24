@@ -80,11 +80,11 @@ const PersonRecord = ({person}) => {
                         name={person.id + "-stars"}
                         value={person.favorite ? 1 : 0}
                         starCount={1}
-                        emptyStarColor="rgb(177, 175, 175)"/>
+                        emptyStarColor="#FFFFFF"/>
                 </span>
             </Panel.Heading>
             <Panel.Body>
-                <ListGroup>
+                <ListGroup className="noMargin">
                     {person.datebegin > 0 &&
                         <ListGroupItem header="Birth">
                             {person.datebegin} in {person.birthplace}
@@ -123,7 +123,7 @@ class ObjectRecord extends Component {
     }
 
     getImageURL() {
-        if (this.props.object.images.length > 0) {
+        if (this.props.object.images && this.props.object.images.length > 0) {
             let img = this.props.object.images[0];
             return img.baseimageurl;
         }
@@ -139,11 +139,11 @@ class ObjectRecord extends Component {
                             name={this.props.object.id + "-stars"}
                             value={this.props.object.favorite ? 1 : 0}
                             starCount={1}
-                            emptyStarColor="rgb(177, 175, 175)"/>
+                            emptyStarColor="#FFFFFF"/>
                     </span>
                 </Panel.Heading>
                 <Panel.Body>
-                    <ListGroup>
+                    <ListGroup className="noMargin">
                         {this.getImageURL() &&
                             <ListGroupItem header="Image">
                                 <Thumbnail style={{maxWidth: 300}} href={this.getImageURL()} target="_blank" src={this.getImageURL()}/>
@@ -205,11 +205,11 @@ class PublicationRecord extends Component {
                             name={this.props.publication.id + "-stars"}
                             value={this.props.publication.favorite ? 1 : 0}
                             starCount={1}
-                            emptyStarColor="rgb(177, 175, 175)"/>
+                            emptyStarColor="#FFFFFF"/>
                     </span>
                 </Panel.Heading>
                 <Panel.Body>
-                    <ListGroup>
+                    <ListGroup className="noMargin">
                         {this.props.publication.people &&
                             this.props.publication.people.map((p) => {
                                 return (
@@ -256,11 +256,11 @@ class ExhibitionRecord extends Component {
                             name={this.props.exhibition.id + "-stars"}
                             value={this.props.exhibition.favorite ? 1 : 0}
                             starCount={1}
-                            emptyStarColor="rgb(177, 175, 175)"/>
+                            emptyStarColor="#FFFFFF"/>
                     </span>
                 </Panel.Heading>
                 <Panel.Body>
-                    <ListGroup>
+                    <ListGroup className="noMargin">
                         {this.props.exhibition.venues &&
                             this.props.exhibition.venues.map((e) => {
                                 return (
@@ -307,11 +307,11 @@ class GalleryRecord extends Component {
                             name={this.props.gallery.id + "-stars"}
                             value={this.props.gallery.favorite ? 1 : 0}
                             starCount={1}
-                            emptyStarColor="rgb(177, 175, 175)"/>
+                            emptyStarColor="#FFFFFF"/>
                     </span>
                 </Panel.Heading>
                 <Panel.Body>
-                    <ListGroup>
+                    <ListGroup className="noMargin">
                         {this.props.gallery.theme &&
                             <ListGroupItem header="Theme">
                                 {this.props.gallery.theme}

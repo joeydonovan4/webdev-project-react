@@ -27,7 +27,7 @@ const LoginContainer = () => (
 )
 
 const DefaultContainer = () => (
-    <div className="container-fluid">
+    <div className="container">
         <Navbar />
         <Route path="/" component={Home}/>
         <Route path="/search" component={Search}/>
