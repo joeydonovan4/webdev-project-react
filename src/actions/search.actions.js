@@ -55,6 +55,19 @@ export const findFavorites = (dispatch, recordType, userId) => {
                     }
                 });
             break;
+        case 'object':
+            userService.findFavoriteObjects(userId)
+                .then(response => {
+                    if (response.ok) {
+                        response.json().then(favorites => {
+                            dispatch({
+                                type: SET_FAVORITES,
+                                favorites: favorites.favoriteObjects
+                            })
+                        });
+                    }
+                });
+            break;
         default:
             return;
     }

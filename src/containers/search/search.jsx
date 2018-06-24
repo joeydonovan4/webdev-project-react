@@ -38,7 +38,7 @@ class Search extends Component {
     renderResults() {
         if (this.props.records.length > 0) {
             return this.props.records.map((record) => {
-                switch (this.props.recordType) {
+                switch (this.state.recordType) {
                     case 'person':
                         return <PersonRecord key={record.id} person={record}/>
                     case 'object':
@@ -127,6 +127,13 @@ class ObjectRecord extends Component {
             <Panel>
                 <Panel.Heading>
                     <a style={{fontSize: 20, fontWeight: 'bold'}} href={this.props.object.url} target="_blank">{this.props.object.title}</a>
+                    <span className="star" title="Favorite">
+                        <StarRatingComponent
+                            name={this.props.object.id + "-stars"}
+                            value={this.props.object.favorite ? 1 : 0}
+                            starCount={1}
+                            emptyStarColor="rgb(177, 175, 175)"/>
+                    </span>
                 </Panel.Heading>
                 <Panel.Body>
                     <ListGroup>

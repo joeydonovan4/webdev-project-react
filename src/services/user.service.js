@@ -14,7 +14,22 @@ function findFavoriteArtists(id) {
     });
 }
 
+function addFavoriteObject(userId, objectId) {
+    return fetch(ENDPOINT + '/' + userId + '/favorites/objects/' + objectId, {
+        method: 'post',
+        credentials: 'include'
+    });
+}
+
+function findFavoriteObjects(id) {
+    return fetch(ENDPOINT + '/' + id + '/favorites/objects', {
+        credentials: 'include'
+    });
+}
+
 export const userService = {
     addFavoriteArtist,
-    findFavoriteArtists
+    findFavoriteArtists,
+    addFavoriteObject,
+    findFavoriteObjects
 };
