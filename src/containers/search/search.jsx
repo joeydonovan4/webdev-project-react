@@ -239,6 +239,13 @@ class ExhibitionRecord extends Component {
             <Panel>
                 <Panel.Heading>
                     <a style={{fontSize: 20, fontWeight: 'bold'}} href={this.props.exhibition.url} target="_blank">{this.props.exhibition.title}</a>
+                    <span className="star" title="Favorite">
+                        <StarRatingComponent
+                            name={this.props.exhibition.id + "-stars"}
+                            value={this.props.exhibition.favorite ? 1 : 0}
+                            starCount={1}
+                            emptyStarColor="rgb(177, 175, 175)"/>
+                    </span>
                 </Panel.Heading>
                 <Panel.Body>
                     <ListGroup>

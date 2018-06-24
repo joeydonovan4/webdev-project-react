@@ -81,6 +81,19 @@ export const findFavorites = (dispatch, recordType, userId) => {
                     }
                 });
             break;
+        case 'exhibition':
+            userService.findFavoriteExhibitions(userId)
+                .then(response => {
+                    if (response.ok) {
+                        response.json().then(favorites => {
+                            dispatch({
+                                type: SET_FAVORITES,
+                                favorites: favorites.favoriteExhibitions
+                            })
+                        });
+                    }
+                });
+            break;
         default:
             return;
     }

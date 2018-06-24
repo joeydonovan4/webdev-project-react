@@ -40,11 +40,26 @@ function findFavoritePublications(id) {
     });
 }
 
+function addFavoriteExhibition(userId, exhibitionId) {
+    return fetch(ENDPOINT + '/' + userId + '/favorites/exhibitions/' + exhibitionId, {
+        method: 'post',
+        credentials: 'include'
+    });
+}
+
+function findFavoriteExhibitions(id) {
+    return fetch(ENDPOINT + '/' + id + '/favorites/exhibitions', {
+        credentials: 'include'
+    });
+}
+
 export const userService = {
     addFavoriteArtist,
     findFavoriteArtists,
     addFavoriteObject,
     findFavoriteObjects,
     addFavoritePublication,
-    findFavoritePublications
+    findFavoritePublications,
+    addFavoriteExhibition,
+    findFavoriteExhibitions
 };
