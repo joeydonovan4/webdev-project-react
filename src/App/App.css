@@ -2,6 +2,19 @@ body {
     font-family: 'Roboto', sans-serif !important;
 }
 
+.navbar-default {
+    background-color: #4CAF50 !important;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav>li>a {
+    color: #FFFFFF !important;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    background-color: #4c8c35 !important;
+}
+
 @media all and (min-width: 480px) {
     .login {
         padding: 60px 0;
