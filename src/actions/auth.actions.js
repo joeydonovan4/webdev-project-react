@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, USERNAME_CHANGED, PASSWORD_CHANGED, SET_LOGGED_IN } from '../constants/index';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, USERNAME_CHANGED, PASSWORD_CHANGED, SET_LOGGED_IN, SET_CURRENT_USER } from '../constants/index';
 import { authService } from '../services/auth.service';
 
 export const login = (dispatch, username, password) => {
@@ -36,5 +36,12 @@ export const setLoggedIn = (dispatch, loggedIn) => (
     dispatch({
         type: SET_LOGGED_IN,
         loggedIn
+    })
+);
+
+export const setCurrentUser = (dispatch, user) => (
+    dispatch({
+        type: SET_CURRENT_USER,
+        user
     })
 );

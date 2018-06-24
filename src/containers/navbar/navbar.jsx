@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Navbar, Nav as Nav2, NavDropdown, InputGroup, FormControl, Button, DropdownButton, MenuItem } from "react-bootstrap";
 import { connect } from 'react-redux';
 import { findRecordsForType, queryUpdated, recordTypeUpdated } from '../../actions/search.actions';
-import { setLoggedIn } from '../../actions/auth.actions';
+import { setLoggedIn, setCurrentUser } from '../../actions/auth.actions';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import { authService } from '../../services/auth.service';
@@ -27,6 +27,7 @@ class Nav extends Component {
                     console.log(response);
                     response.json().then(user => {
                         this.props.setLoggedIn(true);
+                        this.props.setCurrentUser(user);
                     });
                 } else {
                     if (response.status === 401) {
@@ -73,6 +74,7 @@ class Nav extends Component {
                     <Nav2 pullRight>
                         {this.props.loggedIn ?
                             <NavDropdown id="user-dropdown-loggedin" eventKey="user-dropdown-loggedin" title={<span><i className="fa fa-user fa-fw"></i></span>}>
+                                <MenuItem eventKey="" disabled>Username: {this.props.user.username}</MenuItem>
                                 <MenuItem eventKey="profile">Profile</MenuItem>
                                 <MenuItem eventKey="logout" onClick={this.logout}>Logout</MenuItem>
                             </NavDropdown>
@@ -116,14 +118,16 @@ class Nav extends Component {
 const stateToPropertiesMapper = (state) => ({
     query: state.searchReducer.query,
     recordType: state.searchReducer.recordType,
-    loggedIn: state.authReducer.loggedIn
+    loggedIn: state.authReducer.loggedIn,
+    user: state.authReducer.user
 });
 
 const dispatcherToPropsMapper = dispatch => ({
     findRecordsForType: (recordType, query) => findRecordsForType(dispatch, recordType, query),
     queryUpdated: (newQuery) => queryUpdated(dispatch, newQuery),
     recordTypeUpdated: (newRecordType) => recordTypeUpdated(dispatch, newRecordType),
-    setLoggedIn: (loggedIn) => setLoggedIn(dispatch, loggedIn)
+    setLoggedIn: (loggedIn) => setLoggedIn(dispatch, loggedIn),
+    setCurrentUser: (user) => setCurrentUser(dispatch, user)
 });
 
 const connectedNavbar = connect(
