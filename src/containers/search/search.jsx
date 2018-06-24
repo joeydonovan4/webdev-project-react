@@ -5,6 +5,15 @@ import { findFavorites } from '../../actions/search.actions';
 import StarRatingComponent from 'react-star-rating-component';
 
 class Search extends Component {
+    constructor(props) {
+        super(props);
+
+        const params = new URLSearchParams(this.props.location.search);
+        this.state = {
+            query: params.get('q'),
+            recordType: params.get('recordType')
+        };
+    }
     componentDidMount() {
         if (this.props.loggedIn) {
             this.props.findFavorites(this.props.recordType, this.props.currentUserId);
@@ -12,6 +21,13 @@ class Search extends Component {
     }
 
     componentDidUpdate(prevProps) {
+        if (prevProps.location.search !== this.props.location.search) {
+            const params = new URLSearchParams(this.props.location.search);
+            this.setState({
+                query: params.get('q'),
+                recordType: params.get('recordType')
+            });
+        }
         if (this.props.loggedIn) {
             if (prevProps.recordType !== this.props.recordType) {
                 this.props.findFavorites(this.props.recordType, this.props.currentUserId);
@@ -46,7 +62,7 @@ class Search extends Component {
         return (
             <div>
                 <PageHeader style={{marginTop: 60}}>
-                    Results for '{this.props.query}' <small>type: {this.props.recordType}</small>
+                    Results for '{this.state.query}' <small>type: {this.state.recordType}</small>
                 </PageHeader>
                 {this.renderResults()}
             </div>
