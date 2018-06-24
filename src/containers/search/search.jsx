@@ -1,8 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PageHeader, Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { findFavorites } from '../../actions/search.actions';
+import StarRatingComponent from 'react-star-rating-component';
 
 class Search extends Component {
+    componentDidMount() {
+        if (this.props.loggedIn) {
+            this.props.findFavorites(this.props.recordType, this.props.currentUserId);
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.loggedIn) {
+            if (prevProps.recordType !== this.props.recordType) {
+                this.props.findFavorites(this.props.recordType, this.props.currentUserId);
+            }
+        }
+    }
+
     renderResults() {
         if (this.props.records.length > 0) {
             return this.props.records.map((record) => {
@@ -43,6 +59,13 @@ const PersonRecord = ({person}) => {
         <Panel>
             <Panel.Heading>
                 <a style={{fontSize: 20, fontWeight: 'bold'}} href={person.url} target="_blank">{person.displayname}</a>
+                <span className="star" title="Favorite">
+                    <StarRatingComponent
+                        name={person.id + "-stars"}
+                        value={person.favorite ? 1 : 0}
+                        starCount={1}
+                        emptyStarColor="rgb(177, 175, 175)"/>
+                </span>
             </Panel.Heading>
             <Panel.Body>
                 <ListGroup>
@@ -264,10 +287,14 @@ const stateToPropertiesMapper = (state) => ({
     records: state.searchReducer.records,
     query: state.searchReducer.query,
     recordType: state.searchReducer.recordType,
-    errorMsg: state.searchReducer.errorMsg
+    errorMsg: state.searchReducer.errorMsg,
+    loggedIn: state.authReducer.loggedIn,
+    currentUserId: state.authReducer.user._id
 });
 
-const dispatcherToPropsMapper = dispatch => ({});
+const dispatcherToPropsMapper = dispatch => ({
+    findFavorites: (recordType, userId) => findFavorites(dispatch, recordType, userId)
+});
 
 const connectedSearchPage = connect(
     stateToPropertiesMapper,

@@ -1,5 +1,6 @@
-import { SEARCHING, SEARCH_FAILURE, SEARCH_SUCCESS, QUERY_UPDATED, RECORD_TYPE_UPDATED } from '../constants/index';
+import { SEARCHING, SEARCH_FAILURE, SEARCH_SUCCESS, QUERY_UPDATED, RECORD_TYPE_UPDATED, SET_FAVORITES } from '../constants/index';
 import { searchService } from '../services/search.service';
+import { userService } from '../services/user.service';
 
 export const findRecordsForType = (dispatch, recordType, query) => {
     dispatch({
@@ -37,4 +38,24 @@ export const recordTypeUpdated = (dispatch, newRecordType) => {
         type: RECORD_TYPE_UPDATED,
         newRecordType
     })
+};
+
+export const findFavorites = (dispatch, recordType, userId) => {
+    switch (recordType) {
+        case 'person':
+            userService.findFavoriteArtists(userId)
+                .then(response => {
+                    if (response.ok) {
+                        response.json().then(favorites => {
+                            dispatch({
+                                type: SET_FAVORITES,
+                                favorites: favorites.favoriteArtists
+                            })
+                        });
+                    }
+                });
+            break;
+        default:
+            return;
+    }
 };
