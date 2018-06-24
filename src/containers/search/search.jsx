@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { PageHeader, Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { PageHeader, Panel, ListGroup, ListGroupItem, Thumbnail } from 'react-bootstrap';
 import { findFavorites } from '../../actions/search.actions';
 import StarRatingComponent from 'react-star-rating-component';
 
@@ -122,6 +122,13 @@ class ObjectRecord extends Component {
         return null;
     }
 
+    getImageURL() {
+        if (this.props.object.images.length > 0) {
+            let img = this.props.object.images[0];
+            return img.baseimageurl;
+        }
+    }
+
     render() {
         return (
             <Panel>
@@ -137,6 +144,11 @@ class ObjectRecord extends Component {
                 </Panel.Heading>
                 <Panel.Body>
                     <ListGroup>
+                        {this.getImageURL() &&
+                            <ListGroupItem header="Image">
+                                <Thumbnail style={{maxWidth: 300}} href={this.getImageURL()} target="_blank" src={this.getImageURL()}/>
+                            </ListGroupItem>
+                        }
                         {this.getArtist() &&
                             <ListGroupItem header="Artist">
                                 {this.getArtist()}
