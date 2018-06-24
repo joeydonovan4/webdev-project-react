@@ -62,6 +62,7 @@ class Search extends Component {
                 <Panel key={record.id}>
                     <Panel.Heading>
                         <a style={{fontSize: 20, fontWeight: 'bold'}} href={record.url} target="_blank">{this.getPanelHeading(record)}</a>
+                        {this.props.loggedIn ?
                         <span className="star" title="Favorite">
                             <StarRatingComponent
                                 name={record.id + "-stars"}
@@ -70,6 +71,9 @@ class Search extends Component {
                                 onStarClick={() => this.favoriteRecord(record.id, record.favorite)}
                                 emptyStarColor="#FFFFFF"/>
                         </span>
+                        :
+                        <p style={{float: 'right', display: 'inline'}}>Sign in to add to your collection!</p>
+                        }
                     </Panel.Heading>
                     <Panel.Body>
                         {this.state.recordType === 'person' && <PersonRecord person={record}/>}
