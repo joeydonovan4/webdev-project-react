@@ -86,7 +86,9 @@ class Nav extends Component {
                                 <LinkContainer to="/login">
                                     <MenuItem eventKey="login">Login</MenuItem>
                                 </LinkContainer>
-                                <MenuItem eventKey="register">Register</MenuItem>
+                                <LinkContainer to="/register">
+                                    <MenuItem eventKey="register">Register</MenuItem>
+                                </LinkContainer>
                             </NavDropdown>
                         }
                     </Nav2>
