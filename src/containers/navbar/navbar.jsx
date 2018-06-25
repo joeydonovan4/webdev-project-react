@@ -55,6 +55,8 @@ class Nav extends Component {
         authService.logout()
             .then(response => {
                 if (response.ok) {
+                    this.props.setLoggedIn(false);
+                    this.props.setCurrentUser({username: '', password: ''});
                     this.props.history.push('/login');
                 }
             })

@@ -1,37 +1,29 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import { Login } from '../containers/login/index';
 import { Home } from '../containers/home/index';
 import { Search } from '../containers/search/index';
 import { Navbar } from '../containers/navbar/index';
 import { Profile } from '../containers/profile/index';
+import { Register } from '../containers/register/index';
 
 class App extends Component {
     render() {
         return (
             <Router>
-                <Switch>
-                    <Route exact path="/(login)" component={LoginContainer}/>
-                    <Route component={DefaultContainer}/>
-                </Switch>
+                <div className="container">
+                    <Route path="/" component={Navbar}/>
+                    <Switch>
+                        <Route exact path="/login" component={Login}/>
+                        <Route exact path="/register" component={Register}/>
+                        <Route path="/search" component={Search}/>
+                        <Route exact path="/profile" component={Profile}/>
+                        <Route path="/home" component={Home}/>
+                        <Redirect to="/home"/>
+                    </Switch>
+                </div>
             </Router>
         );
     }
 }
 export default App;
-
-const LoginContainer = () => (
-    <div className="container">
-        <Route exact path="/" render={() => <Redirect to="/login" />}/>
-        <Route path="/login" component={Login}/>
-    </div>
-)
-
-const DefaultContainer = () => (
-    <div className="container">
-        <Navbar />
-        <Route path="/" component={Home}/>
-        <Route path="/search" component={Search}/>
-        <Route path="/profile" component={Profile}/>
-    </div>
-)
