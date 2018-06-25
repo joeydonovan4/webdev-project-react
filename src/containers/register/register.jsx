@@ -19,7 +19,8 @@ class Register extends Component {
                 lastName: this.props.lastName
             },
             password: this.props.password,
-            email: this.props.email
+            email: this.props.email,
+            admin: false
         });
     }
 

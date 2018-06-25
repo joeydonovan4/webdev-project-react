@@ -33,7 +33,9 @@ class Login extends Component {
                                 <FormControl.Feedback />
                                     {this.passwordValidation() && <HelpBlock>{this.props.errorMsg}</HelpBlock>}
                             </FormGroup>
-                            <Button block bsSize="large" disabled={this.disableSubmit()} type="submit">Login</Button>
+                            <Button block bsSize="large" disabled={this.disableSubmit()} type="submit">
+                                {this.props.loggingIn ? 'Logging In...' : 'Login'}
+                            </Button>
                             <LinkContainer to="/register">
                                 <Button block bsSize="large" type="button">Register</Button>
                             </LinkContainer>
@@ -50,7 +52,7 @@ class Login extends Component {
     }
 
     disableSubmit() {
-        return this.props.user.username === '' || this.props.user.password === '';
+        return this.props.loggingIn || this.props.user.username === '' || this.props.user.password === '';
     }
 
     usernameValidation() {

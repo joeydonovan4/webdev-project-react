@@ -15,7 +15,7 @@ class Home extends Component {
                 <p>
                     This website uses the Harvard Art Museum's API, "a REST-style service designed for developers who wish
                     to explore and integrate the museums' collections in their projects. The API provides direct access to the
-                    data that powers the <a href="https://harvardartmuseums.org" target="_blank">museums' website</a> and many other aspects of the museums."
+                    data that powers the <a href="https://harvardartmuseums.org" target="_blank" rel="noopener noreferrer">museums' website</a> and many other aspects of the museums."
                 </p>
             </Jumbotron>
         )

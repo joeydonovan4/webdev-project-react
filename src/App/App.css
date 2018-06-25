@@ -108,8 +108,9 @@ body {
         transition: all 0.3 ease;
         cursor: pointer;
     }
-    .loginForm button:hover,.loginForm button:active,.loginForm button:focus {
+    .loginForm button:hover,.loginForm button:active,.loginForm button:focus, .loginForm button[disabled]:hover {
         background: #43A047;
+        color: white;
     }
 }
 
