@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import picture from '../../blank-profile-picture.png';
-import { PageHeader, Grid, Col, Row, ListGroup, ListGroupItem, Panel, Image } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import { PageHeader, Grid, Col, Row, ListGroup, ListGroupItem, Panel, Image, Button } from 'react-bootstrap';
 
 class Profile extends Component {
     render() {
@@ -10,10 +11,15 @@ class Profile extends Component {
         return (
             <div>
                 {!this.props.loggedIn ? <Redirect to="/home"/> :
-                <div>
-                    <PageHeader style={{marginTop: 60}}>
+                <div style={{marginTop: 60}}>
+                    <PageHeader style={{display: 'inline-block', marginTop: 0}}>
                         {user.username}
                     </PageHeader>
+                    {this.props.currentUser.admin &&
+                        <LinkContainer to="/admin">
+                            <Button type="button" className="pull-right">Admin</Button>
+                        </LinkContainer>
+                    }
                     <Grid>
                         <Row>
                             <Col xs={4}>

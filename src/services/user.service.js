@@ -1,6 +1,12 @@
 import { HOST } from '../constants/index';
 const ENDPOINT = HOST + '/users';
 
+function findAllUsers() {
+    return fetch(ENDPOINT , {
+        credentials: 'include'
+    });
+}
+
 function createNewUser(user) {
     return fetch(ENDPOINT, {
         method: 'post',
@@ -78,6 +84,7 @@ function findFavoriteGalleries(id) {
 }
 
 export const userService = {
+    findAllUsers,
     createNewUser,
     addFavoriteArtist,
     findFavoriteArtists,
