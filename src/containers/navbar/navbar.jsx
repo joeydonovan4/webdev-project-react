@@ -24,7 +24,6 @@ class Nav extends Component {
         authService.getCurrentUser()
             .then(response => {
                 if (response.ok) {
-                    console.log(response);
                     response.json().then(user => {
                         this.props.setLoggedIn(true);
                         this.props.setCurrentUser(user);
@@ -75,7 +74,9 @@ class Nav extends Component {
                         {this.props.loggedIn ?
                             <NavDropdown id="user-dropdown-loggedin" eventKey="user-dropdown-loggedin" title={<span><i className="fa fa-user fa-fw"></i></span>}>
                                 <MenuItem eventKey="" disabled>Username: {this.props.user.username}</MenuItem>
-                                <MenuItem eventKey="profile">Profile</MenuItem>
+                                <LinkContainer to="/profile">
+                                    <MenuItem eventKey="profile">Profile</MenuItem>
+                                </LinkContainer>
                                 <MenuItem eventKey="logout" onClick={this.logout}>Logout</MenuItem>
                             </NavDropdown>
                             :
