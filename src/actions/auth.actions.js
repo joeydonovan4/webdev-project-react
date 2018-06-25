@@ -9,7 +9,9 @@ export const login = (dispatch, username, password) => {
     authService.login(username, password)
         .then(resp => {
             if (resp.ok) {
-                dispatch({ type: LOGIN_SUCCESS });
+                resp.json().then(user => {
+                    dispatch({ type: LOGIN_SUCCESS, user});
+                });
             } else {
                 resp.json().then(err => {
                     dispatch({ type: LOGIN_FAILURE, errorMsg: err.error });

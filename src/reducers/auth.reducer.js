@@ -42,7 +42,7 @@ export const authReducer = (state = {loggingIn: false, user: {username: '', pass
         case constants.LOGIN_SUCCESS:
             return {
                 loggingIn: false,
-                user: state.user,
+                user: action.user,
                 errorMsg: '',
                 loggedIn: true
             }
