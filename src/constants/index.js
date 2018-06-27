@@ -1,4 +1,4 @@
-export const HOST = 'http://localhost:5000/api';
+export const HOST = 'https://jdonovan-project-server.herokuapp.com/api';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
